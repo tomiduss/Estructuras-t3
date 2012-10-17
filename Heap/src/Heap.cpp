@@ -18,13 +18,18 @@ Heap::Heap() {
 		array[i] = 0;
 	}
 }
-Heap::Heap(int* data, int n, int data_size) {
+Heap::Heap(int* data, int data_size) {
 	array = data;
 	count = 0;
 	array_size = data_size;
-
 }
 
+Heap::Heap(int* data, int n, int data_size){
+	array = data;
+	count = n;
+	array_size = data_size;
+	heapify();
+}
 
 
 Heap::~Heap() {
@@ -176,7 +181,7 @@ void Heap::print(){
 
 void Heap::heapsort(int* data, int n, int data_size){
 	//Creamos nuevo heap con los elementos del arreglo.
-	Heap* h = new Heap(data, n, data_size);
+	Heap* h = new Heap(data, data_size);
 	//Insertar elementos al heap.
 	for(int i = 0; i < n; i++){
 		h->insert(data[i]);
@@ -194,5 +199,26 @@ void Heap::heapsort(int* data, int n, int data_size){
 	h->print();
 }
 
+void Heap::heapsort2(int* data, int n, int data_size){
+	Heap* h = new Heap(data, n, data_size);
 
+	for(int i = n; i > 0 ; i--){
+			int aux = h->findMax();
+			h->removeMax();
+			//h->print();
+			data[i-1] = aux;
+			//h->print();
+		}
+		cout << "Final: ";
+		h->print();
+}
+
+
+void Heap::heapify(){
+	double aux = (size - 1)/2;
+	int n = floor(aux);
+	for(int i = n; i > 0; i--){
+		down_heap(i);
+	}
+}
 

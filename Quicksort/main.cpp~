@@ -16,7 +16,6 @@ int main(){
 
 	Quicksorter* sorter = new Quicksorter( );
 
-   //Dependiendo del numero que se ingresa al final, que tipo de quicksort se usa.
 	sorter->sort( numeros, 14, 3);
 	sorter->print();
 	cout << "fin";

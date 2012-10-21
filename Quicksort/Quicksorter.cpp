@@ -25,13 +25,16 @@ void Quicksorter::sort( int* arreglo, int length, int tipo){
 
 void Quicksorter::quicksort( int* arreglo, int min, int max, int tipo){
 
-	if( max-min +1 <= 0)
+	//Chequeamos que el arreglo tenga al menos tamaño 1. De lo contrario terminamos
+	if( max-min  < 0 )
 	{
 		return;
 	}
 
+	//Pivoteamos el arreglo.
 	int indice_pivote = pivotear( arreglo, min, max, tipo);
 
+	//Aplicamos la recursion para los arreglosa los lados del pivote
 	quicksort( arreglo, min, indice_pivote -1, tipo);
 	quicksort( arreglo, indice_pivote + 1, max, tipo);
 
@@ -39,15 +42,18 @@ void Quicksorter::quicksort( int* arreglo, int min, int max, int tipo){
 
 int Quicksorter::pivotear( int* arreglo, int min, int max, int tipo )
 {
+	//Si el arreglo tiene tamaño 1 retornamos.
+	if(min == max)
+		return min;
 
+	//Primero elegimos el pivote, de alguna de las posibles maneras
 	int indice_pivote = elegirPivote( tipo, arreglo, min, max);
 
-	//exchange( arreglo, indice_pivote, min);
-	int temp = arreglo[indice_pivote];
-	arreglo[ indice_pivote ] = arreglo[ min ];
-	arreglo[ min ] = temp;
+	//Se intercambia el pivote con el primer elemento del arreglo
+	exchange( arreglo, indice_pivote, min);
 
-
+	//Partimos asumiendo que el pivote es el menor del arreglo
+	indice_pivote = min;
 	int valor_pivote = arreglo[indice_pivote];
 
 	//recorremos el arreglo buscando todos los numeros menores que el pivote
@@ -61,17 +67,16 @@ int Quicksorter::pivotear( int* arreglo, int min, int max, int tipo )
 		}
 	}
 
-	//exchange( arreglo, min, indice_pivote);
-	temp = arreglo[ min ];
-	arreglo[ min ] = arreglo[ indice_pivote ];
-	arreglo[ indice_pivote] = temp;
-
+	//Intercambio el pivote (que esta guardado en min), con el numero en la posicion del indice.
+	exchange( arreglo, min, indice_pivote);
 
 	//retorno el lugar donde quedo el pivote
 	return indice_pivote;
 }
 
-int Quicksorter::elegirPivote( int tipo, int* arreglo, int min, int max){
+//este metodo recibe un entero llamado tipo que define de cual de las tres formas
+//se elige el pivote del arreglo.
+int Quicksorter::elegirPivote( int tipo, int* a, int min, int max){
 	srand ( time(NULL) );
 
 	if( tipo == 1)
@@ -83,7 +88,18 @@ int Quicksorter::elegirPivote( int tipo, int* arreglo, int min, int max){
 		return ej;
 	}
 	else
-		return max;
+	{
+		//calculamos el numero del medio del arreglo (truncado)
+		int med = (( max - min)/2) + min;
+
+		//retornamos el numero intermedio entre min, med y max
+		if( a[min] <= a[med] && a[med] <= a[max])
+			return med;
+		else if ( a[med] <= a[max] && a[max] <= a[min])
+			return max;
+		else
+			return min;
+	}
 }
 
 //Este metodo recibe un arreglo y dos enteros e intercambia o valores del arreglo

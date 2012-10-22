@@ -82,7 +82,11 @@ int Quicksorter::elegirPivote( int tipo, int* a, int min, int max){
 	if( tipo == 1)
 		return min;
 	else if (tipo == 2)
-		return ej = rand() % (max - min) + min;
+	{
+		int ej = rand() % (max - min) + min;
+		cout << min << max << ej << endl;
+		return ej;
+	}
 	else
 	{
 		//calculamos el numero del medio del arreglo (truncado)

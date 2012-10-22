@@ -7,17 +7,27 @@
 
 #include <iostream>
 #include "Quicksorter.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
 int main(){
 
-	int numeros [] = {12, 34, 2, 56, 87, 20, 867, 98, 43, 23, 345 , 45 ,8 , 1};
+	int numeros[10000]; //= {12, 34, 2, 56, 87, 20, 867, 98, 43, 23, 345 , 45 ,8 , 1};
+
+	srand ( time(NULL) );
+
+	for( int i = 0; i < 10000; i++)
+	{
+		numeros[i] = rand() % 1000000;
+	}
+
 
 	Quicksorter* sorter = new Quicksorter( );
 
-   //Dependiendo del numero que se ingresa al final, que tipo de quicksort se usa.
-	sorter->sort( numeros, 14, 3);
+	sorter->sort( numeros, 10000, 3);
 	sorter->print();
 	cout << "fin";
 	return 0;
